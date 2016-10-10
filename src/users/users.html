@@ -1,0 +1,40 @@
+<template>
+  <require from="./user-detail.html"></require>
+  
+  <div>
+    <div class="header">
+      <div class="header-left">Users</div>
+    </div>
+
+    <div class="sidebar">
+      <ul repeat.for="user of users">
+        <li class="customer ${activeId === user.id ? 'active' : ''}">
+          <a route-href="route: user; params.bind: { id: user.id }">
+            <div class="well">
+              <div>
+                <div class="avatar">
+                  <img src="${user.avatarUrl}">
+                </div>
+                <div class="body">
+                  <p>
+                    <strong>${user.fullName}</strong>
+                  </p>
+                  <span class="badge badge-error">${user.ticketCount & oneTime} tickets</span>
+                  <span class="badge badge-success">${user.postCount & oneTime} posts</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="detail-container" if.bind="controller.editable">
+      <user-detail controller.bind="controller"></user-detail>
+    </div>
+    
+    <div class="detail-container" if.bind="!controller.editable">
+      <h2 class="select-from-list">Please select a user from the list.</h2>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,108 @@
+<template>
+  <div class="ticket">
+    <div class="header">
+      <div class="btn-group">
+        <a class="btn btn-default creator" route-href="route: user; params.bind: { id:ticket.participants[0].id}" class="btn">
+          <span>${ticket.participants[0].username}</span>
+        </a>
+        <button class="btn status active">
+          <span class="badge ${ticket.status}">${ticket.status}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="well">
+        <form>
+          <div class="form-group">
+            <label class="control-label">Type</label>
+            <select class="form-control">
+              <option>Question</option>
+              <option>Incident</option>
+              <option>Problem</option>
+              <option>Task</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Priority</label>
+            <select class="form-control">
+              <option>Low</option>
+              <option>Normal</option>
+              <option>High</option>
+              <option>Urgent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Tags</label>
+            <input class="form-control" type="text" placeholder="tags" />
+          </div>
+        </form>
+      </div>
+      <div class="well">
+        <form>
+          <div class="form-group">
+            <label class="control-label">Internal Notes</label>
+            <textarea class="form-control"></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="detail-container">
+      <div class="header">
+        <i class="fa fa-comments"></i>
+        <div class="content">
+          <div class="title">${ticket.title}</div>
+          <div class="description">
+            <span>${ticket.createdAt | date}</span>
+            <i class="fa fa-circle separator"></i>
+            <span>${from.firstName} ${from.lastName}</span> &lt;
+            <span>${from.email}</span>&gt;
+          </div>
+        </div>
+      </div>
+
+      <div class="thread">
+        <form class="message">
+          <rich-text-editor value.bind="message"></rich-text-editor>
+          <!--TODO: Add a rich text editor and bind its value to message.-->
+        </form>
+
+        <div class="btn-group dropup pull-right">
+          <button click.trigger="submit('Solved')" class="btn btn-success">Submit as Solved</button>
+          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" click.trigger="submit('Open')">Submit as Open</a>
+              <a href="#" click.trigger="submit('Pending')">Submit as Pending</a>
+              <a href="#" click.trigger="submit('Solved')">Submit as Solved</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="post-list">
+          <div repeat.for="post of ticket.posts" class="post">
+            <input type="hidden" model.one-time="getParticipant(post.fromId)" ref="participant">
+            <div class="avatar">
+              <img src="${participant.model.avatarUrl}">
+            </div>
+            <div class="body">
+              <div>
+                <strong>${participant.model.firstName}</strong>
+                <strong>${participant.model.lastName}</strong>
+                <span class="createdAt">${post.createdAt | date}</span>
+              </div>
+              <div>
+                <div>
+                  <p innerhtml.bind="post.content"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

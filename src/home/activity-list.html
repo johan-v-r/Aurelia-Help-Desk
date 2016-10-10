@@ -1,0 +1,19 @@
+<template>
+  <ul>
+    <li repeat.for="a of activity" click.delegate="openTab($event, a)" class="activity">
+      <!--Note: The activity type isn't the same as the route. What do we do?-->
+      <a route-href="route.bind: a.type | activityTypeToRoute; params.bind: { id: a.associatedId }">
+        <div class="well">
+          <div class="avatar">
+            <img src="${a.createdBy.iconUrl}">
+          </div>
+          <div class="body">
+            <div class="title" innerhtml.bind="a.title"></div>
+            <div class="content">${a.content}</div>
+            <div class="date">${a.createdAt | date}</div> <!--TODO: Add nicer date format. -->
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</template>

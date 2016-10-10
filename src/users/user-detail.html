@@ -1,0 +1,164 @@
+<template class="user-detail" bindable="controller"> 
+  <require from="resources/data/timezones"></require>
+  <require from="resources/data/countries"></require>
+
+  <div with.bind="controller.editable" class="header">
+    <div>
+      <div class="avatar">
+        <img src="${avatarUrl}">
+      </div>
+      <div class="content">
+        <div>
+          <span class="title">${fullName}</span>
+        </div>
+        <div>${email}</div>
+      </div>
+      <div class="text-right user-errors" if.bind="!controller.isValid">
+        <span class="label label-danger sandbox-invalid">User Has Errors</span>
+      </div>
+    </div>
+  </div>
+
+  <div with.bind="controller.editable" class="body">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#home" data-toggle="tab">Profile</a>
+      </li>
+      <li>
+        <a href="#address" data-toggle="tab">Address</a>
+      </li>
+      <li>
+        <a href="#profile" data-toggle="tab">Account</a>
+      </li>
+      <li class="pull-right">
+        <button class="btn ${isActive ? 'btn-danger' : 'btn-info'}" 
+                click.trigger="controller.toggleActiveStatus()">
+          ${isActive ? 'Deactivate' : 'Activate'}
+        </button>
+        <button class="btn btn-warning"
+                click.trigger="controller.revert()"
+                disabled.bind="!controller.isDirty">Revert</button>
+        <button class="btn btn-success"
+                click.trigger="controller.save()"
+                disabled.bind="!controller.isDirty || !controller.isValid">Save</button>
+      </li>
+    </ul>
+
+    <div with.bind="controller.editable" class="tab-content">
+      <div class="tab-pane active in" id="home">
+        <form role="form" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">First Name</label>
+            <div class="col-sm-3">
+              <input value.bind="firstName & validate" type="text" placeholder="first name" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Last Name</label>
+            <div class="col-sm-3">
+              <input value.bind="lastName & validate" type="text" placeholder="last name" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-3">
+              <input value.bind="email & validate" type="text" placeholder="email" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Time Zone</label>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option repeat.for="zone of timezones" value.bind="zone.value">${zone.display}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">About</label>
+            <div class="col-sm-3">
+              <textarea rows="3" class="form-control" placeholder="about"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane fade" id="address">
+        <form role="form" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Address Line 1</label>
+            <div class="col-sm-3">
+              <input type="text" placeholder="address line 1" class="form-control">
+              <p class="help-block">Street address, P.O. box, company name, c/o</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Address Line 2</label>
+            <div class="col-sm-3">
+              <input type="text" placeholder="address line 2" class="form-control">
+              <p class="help-block">Apartment, suite , unit, building, floor, etc.</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">City / Town</label>
+            <div class="col-sm-3">
+              <input type="text" placeholder="city" class="form-control">
+              <p class="help-block"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">State / Province / Region</label>
+            <div class="col-sm-3">
+              <input type="text" placeholder="state / province / region" class="form-control">
+              <p class="help-block"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Zip / Postal Code</label>
+            <div class="col-sm-3">
+              <input type="text" placeholder="zip or postal code" class="form-control">
+              <p class="help-block"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Country</label>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option value="" selected="selected">(please select a country)</option>
+                <option repeat.for="country of countries" value.bind="country.abbreviation">${country.name}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane fade" id="profile">
+        <form role="form" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-3">
+              <p class="form-control-static">${controller.editable.username}</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-3">
+              <input type="password" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Confirm Password</label>
+            <div class="col-sm-3">
+              <input type="password" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>

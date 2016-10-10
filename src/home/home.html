@@ -1,0 +1,48 @@
+<template>
+  <require from="./activity-list.html"></require>
+  <require from="./news-list.html"></require>
+  
+  <div>
+    <div class="header">
+      <div class="header-left">Activity</div>
+      <div class="header-right">Benchmarks &amp; News</div>
+    </div>
+
+    <div class="sidebar">
+      <!--<activity-list activity.bind="activity"></activity-list>-->
+      <compose view="./activity-list.html"></compose>
+    </div>
+
+    <div class="detail-container">
+      <div class="row1x2">
+        <!--TODO: Add Charts Here-->
+        <line-chart class="column1x2"
+                    labels.bind="['January', 'February', 'March', 'April', 'May', 'June', 'July']">
+          <chart-data data.bind="[65, 59, 80, 81, 56, 55, 40]"></chart-data>
+          <chart-data data.bind="[28, 48, 40, 19, 86, 27, 90]"
+                      fill-color="rgba(0,0,150,0.2)"
+                      stroke-color="rgba(230,38,135,0.5)"
+                      point-color="rgba(230,38,135,1)",
+                      point-stroke-color="#fff",
+                      point-highlight-fill="#fff",
+                      point-highlight-stroke="rgba(230,38,135,1)"></chart-data>  
+        </line-chart>
+
+        <bar-chart class="column2x2"
+                  labels.bind="['January', 'February', 'March', 'April', 'May', 'June', 'July']">
+          <chart-data data.bind="[65, 59, 80, 81, 56, 55, 40]"></chart-data>
+          <chart-data data.bind="[28, 48, 40, 19, 86, 27, 90]"
+                      fill-color="rgba(0,0,150,0.2)"
+                      stroke-color="rgba(230,38,135,0.5)"
+                      highlight-fill="rgba(230,38,135,0.75)"
+                      highlight-stroke="rgba(230,38,135,1)"></chart-data>
+        </bar-chart>
+
+      </div>
+      <div class="row2x2">
+        <!--TODO: Add News List Here-->
+        <news-list news.bind="news"></news-list>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,17 @@
+<template bindable="news" class="news">
+  
+<div repeat.for="item of news">
+  <!--One of these for each item in the news array.-->
+    <h1>${item.title}</h1>
+    <p>${item.content}</p>
+    <div>
+      <span class="badge badge-success">${item.createdAt | date}</span>
+      <div class="pull-right" repeat.for="tag of item.tags">
+        <!--One of these for each tag in the news.tags array.-->
+        <span class="badge">${tag}</span>
+      </div>
+    </div>
+    <hr>
+</div>
+  
+</template>

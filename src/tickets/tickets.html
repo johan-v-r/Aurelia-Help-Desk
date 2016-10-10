@@ -1,0 +1,20 @@
+<template>
+  <div class="header">
+    <div class="header-single">Tickets</div>
+  </div>
+
+  <data-grid items.bind="tickets">
+    <grid-column heading="Title">
+      <a route-href="route: thread; params.bind: { id:item.id }">${item.title}</a>
+    </grid-column>
+    <grid-column heading="Submitted By">
+      ${item.participants[0].firstName} ${item.participants[0].lastName}
+    </grid-column>
+    <grid-column heading="Submitted On">
+      ${item.createdAt | date}
+    </grid-column>
+    <grid-column heading="Type" property="type"></grid-column>
+    <grid-column heading="Status" property="status"></grid-column>
+    <grid-column heading="Priority" property="priority"></grid-column>
+  </data-grid>
+</template>

@@ -1,0 +1,17 @@
+<template>
+  <ai-dialog>
+    <ai-dialog-header>${model.title}</ai-dialog-header>
+
+    <ai-dialog-body>
+      <p>${model.message}</p>
+      <form submit.trigger="ok()"> <!--On submit, ok the dialog w/ the answer response.-->
+        <input type="text" value.bind="answer" class="form-control" attach-focus="true"> <!--Bind the answer.-->
+      </form>
+    </ai-dialog-body>
+
+    <ai-dialog-footer>
+      <button click.trigger="cancel()">Cancel</button><!--Cancel the dialog.-->
+      <button click.trigger="ok()" disabled.bind="!answer">Ok</button>!<!--Ok the dialog w/ answer response; Disable the button if there's no answer.-->
+    </ai-dialog-footer>
+  </ai-dialog>
+</template>
